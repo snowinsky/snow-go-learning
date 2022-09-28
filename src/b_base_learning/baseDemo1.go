@@ -105,17 +105,16 @@ func main() {
 
 	fmt.Println(p7, p9)
 
+	//go的函数可以一次返回多个返回值，这得点赞
 	var rA, rB = func1()
 	fmt.Println(rA, rB)
-
+	//go中常量的定义
 	fmt.Println(is_main_package, name_of_package, count_of_import)
 
-	//is_main_package = false 编译错误
-
+	//is_main_package = false 编译错误 常量一旦赋值是不可更改的
 	fmt.Println(chinese_name, english_name, age)
 
 	//fmt.Println(iota) iota只能在常量定义时用，就是个常量计数器
-
 	const (
 		const_a = "sss"
 		const_b = iota
@@ -127,6 +126,8 @@ func main() {
 	)
 	//sss 1 123 true true true 6 充分显示iota就是个常量个数计数器
 	fmt.Println(const_a, const_b, const_c, const_d, const_e, const_f, const_g)
+
+	//go中的if条件判断和java中一样
 	var aaa = 11
 	if aaa < 5 {
 		fmt.Println("go here aaa<5")
@@ -135,7 +136,7 @@ func main() {
 	} else {
 		fmt.Println("go here aaa>5")
 	}
-	//case里面自带break,匹配到case之后就不会执行下面的了，如果想让它继续把下面的都跑完，就家fallthrough
+	//switch 语句中的case里面自带break,匹配到case之后就不会执行下面的了，如果想让它继续把下面的都跑完，就加fallthrough
 	switch aaa {
 	case 1:
 		fmt.Println("go here aaa=1")
@@ -188,13 +189,13 @@ func main() {
 	for i := 0; i < 10; i++ {
 		fmt.Println("for i=" + strconv.Itoa(i))
 	}
-
+	//while(express)的玩法
 	j := 10
 	for j > 7 {
 		j--
 		fmt.Println("for j=" + strconv.Itoa(j))
 	}
-
+	//while(true)的玩法
 	for {
 		fmt.Println("for true")
 		break
@@ -219,7 +220,7 @@ func main() {
 	fmt.Println(array1)
 	fmt.Println(array1[1])
 
-	//指针 定义
+	//指针 声明时是类型上加星星，取值时是变量上加星星
 	var intAaPoint *int
 	var stringBbPoint *string
 
@@ -233,7 +234,7 @@ func main() {
 	//指针 内存地址值
 	fmt.Println(intAaPoint)
 	fmt.Println(stringBbPoint)
-	//指针 指针对应的真实值
+	//指针 变量上加星星就获取了指针的对应的真实值了
 	fmt.Println(*intAaPoint)
 	fmt.Println(*stringBbPoint)
 
@@ -242,7 +243,7 @@ func main() {
 	fmt.Println(aPerson)
 	fmt.Println(aPerson.name)
 
-	//语言切片 就是创建list
+	//切片 就是创建list
 	//新建list
 	var list1 = make([]int, 0)
 	fmt.Println(list1)
@@ -258,10 +259,14 @@ func main() {
 	fmt.Println(list1[:3])
 	fmt.Println(list1[2:])
 	//删除list中的元素?这个go里边根本没这功能，只能是把删除元素之外的元素拼接起来塞到原来的list里来实现
+	fmt.Println("delete before ==", list1)
+	list1 = append(make([]int, 0), list1[1], list1[3])
+	fmt.Println("delete after  ==", list1)
 
 	//range相当于java中的迭代器
 	list2 := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
 	fmt.Println(list2)
+	//range迭代slice时，返回位置索引+具体值
 	for indexOfList2, valueOfList2 := range list2 {
 		fmt.Printf("index==>value::%d => %d\n", indexOfList2, valueOfList2)
 		//fmt.Println("index=%d, value=%d", indexOfList2, valueOfList2)
@@ -285,10 +290,12 @@ func main() {
 	fmt.Println(map1)
 	fmt.Println(map2)
 	//对map来讲，range遍历的是key
+	//range 迭代map时，返回的是key
 	for val := range map1 {
 		fmt.Println(val, map1[val])
 	}
-	//map的是否存在元素
+	//map的是否存在元素，通过map的key直接获取value时同时返回是否存在的bool值，可以先判断是否存在，然后再拿取值。
+	//如果map的value恰巧是nil，那就尴尬了，不知道是key不存在还是真的value就是nil
 	var anyValue, isExists = map2["five"]
 	fmt.Println(anyValue, isExists)
 
